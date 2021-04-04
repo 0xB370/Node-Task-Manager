@@ -57,6 +57,15 @@ export default createStore({
       commit('tarea', id)
     },
     async updateTarea({ commit }, tarea) {
+      try {
+        const res = fetch(`${firebaseURL}/${tarea.id}.json`, {
+          method: 'PATCH',
+          body: JSON.stringify(tarea)
+        })
+        commit('update', tarea)
+      } catch (error) {
+        console.error(error);
+      }
     },
     async cargarLocalStorage({ commit }) {
       try {
