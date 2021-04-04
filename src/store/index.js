@@ -44,14 +44,20 @@ export default createStore({
           body: JSON.stringify(tarea)
         })
         const dataDB = await res.json()
-        console.log(dataDB);
       } catch (error) {
         console.error(error);
       }
       commit('set', tarea)
     },
-    deleteTareas({ commit }, id) {
-      commit('eliminar', id)
+    async deleteTareas({ commit }, id) {
+      try {
+        fetch(`${firebaseURL}/${id}.json`, {
+          method: 'DELETE'
+        })
+        commit('eliminar', id)
+      } catch (error) {
+        console.error(error);
+      }
     },
     setTarea({ commit }, id) {
       commit('tarea', id)
