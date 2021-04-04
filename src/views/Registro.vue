@@ -1,6 +1,7 @@
 <template>
     <h1 class="my-5">Registro de Usuario</h1>
-    <input 
+    <form @submit.prevent="registrarUsuario({email, password: pass1}); limpiarForm()">
+        <input 
         type="email" 
         placeholder="E-mail"
         class="form-control my-2"
@@ -25,9 +26,12 @@
     >
         Registrar
     </button>
+    </form>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     data() {
         return {
@@ -40,6 +44,14 @@ export default {
         bloquear() {
             return !( (this.email.trim() !== "") && (this.email.includes("@")) && 
                 (this.pass1.length > 5) && (this.pass1 === this.pass2) )
+        }
+    },
+    methods: {
+        ...mapActions(['registrarUsuario']),
+        limpiarForm() {
+            this.email = ''
+            this.pass1 = ''
+            this.pass2 = ''
         }
     }
 }

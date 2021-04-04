@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 import router from '../router'
 
 const firebaseURL = process.env.VUE_APP_FIREBASE_DB_URL
+const signupURL = process.env.VUE_APP_SIGNUP_URL
 
 export default createStore({
   state: {
@@ -82,6 +83,22 @@ export default createStore({
           arrayTareas.push(dataDB[id])
         }
         commit('cargar', arrayTareas)
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async registrarUsuario({ commit }, usuario) {
+      try {
+        const res = fetch(signupURL, {
+          method: 'POST',
+          body: JSON.stringify({
+            email: usuario.email,
+            password: usuario.password,
+            returnSecureToken: true
+          })
+        })
+        const userDB = await res
+        console.log(userDB)
       } catch (error) {
         console.error(error);
       }
