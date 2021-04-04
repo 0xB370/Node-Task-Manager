@@ -1,6 +1,8 @@
 import { createStore } from 'vuex'
 import router from '../router'
 
+const firebaseURL = process.env.VUE_APP_FIREBASE_DB_URL
+
 export default createStore({
   state: {
     tareas: [],
@@ -54,11 +56,20 @@ export default createStore({
     setTarea({ commit }, id) {
       commit('tarea', id)
     },
-    updateTarea({ commit }, tarea) {
-      commit('update', tarea)
+    async updateTarea({ commit }, tarea) {
     },
-    cargarLocalStorage({ commit }) {
-
+    async cargarLocalStorage({ commit }) {
+      try {
+        const res = await fetch(`${firebaseURL}.json`)
+        const dataDB = await res.json()
+        const arrayTareas = []
+        for (let id in dataDB) {
+          arrayTareas.push(dataDB[id])
+        }
+        commit('cargar', arrayTareas)
+      } catch (error) {
+        console.error(error);
+      }
     }
   },
   modules: {
