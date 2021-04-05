@@ -42,7 +42,7 @@ export default {
     },
     computed: {
         bloquear() {
-            return !( (this.email.trim() !== "") && (this.email.includes("@")) && 
+            return !( (this.email.includes("@")) && 
                 (this.pass1.length > 5) && (this.pass1 === this.pass2) )
         }
     },
