@@ -150,7 +150,7 @@ export default createStore({
       .then(user => {
         if (user.error) {
           console.error(user.error.message);
-          return commit('setError', error.error.message)
+          return commit('setError', user.error.message)
         }
         commit('setUser', user)
         commit('setError', null)
